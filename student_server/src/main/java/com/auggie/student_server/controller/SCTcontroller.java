@@ -10,12 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @Auther: auggie
- * @Date: 2022/2/10 20:15
- * @Description: SCTcontroller
- * @Version 1.0.0
- */
+
 
 @RestController
 @CrossOrigin("*")
