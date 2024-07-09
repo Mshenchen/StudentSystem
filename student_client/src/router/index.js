@@ -1,8 +1,14 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import login from '../views/login/index';
-
-
+import student from "@/views/Student/index";
+import studentHome from "@/views/Student/home";
+import studentSelectCourseManage from "@/views/Student/selectCourse/index";
+import selectCourse from "@/views/Student/selectCourse/selectCourse";
+import querySelectedCourse from "@/views/Student/selectCourse/querySelectedCourse";
+import studentCourseGrade from "@/views/Student/courseGrade/index";
+import queryCourseGrade from "@/views/Student/courseGrade/queryCourseGrade";
+import updateInfo from "@/components/updateInfo";
 Vue.use(VueRouter)
 
 const routes = [
@@ -19,6 +25,78 @@ const routes = [
     name: 'login',
     component: login
   },
+  {
+    path: '/student',
+    name: 'student',
+    component: student,
+    redirect: '/studentHome',
+    meta: {requireAuth: true},
+    children: [
+      {
+        path: '/student',
+        name: 'hi! student',
+        component: studentHome,
+        // 只有经过身份验证的用户才能访问
+        meta: {requireAuth: true},
+        children: [
+          {
+            path: '/studentHome',
+            name: '学生主页',
+            component: studentHome,
+            meta: {requireAuth: true},
+          },
+        ],
+      },
+      {
+        path: '/updateInfo',
+        name: '学生编辑',
+        component: updateInfo,
+        meta: {requireAuth: true},
+        children: [
+          {
+            path: '/updateInfoHome',
+            name: '编辑学生信息',
+            component: updateInfo,
+            meta: {requireAuth: true}
+          }
+        ]
+      },
+      {
+        path: '/studentSelectCourseManage',
+        name: '选课管理',
+        component: studentSelectCourseManage,
+        meta: {requireAuth: true},
+        children: [
+          {
+            path: '/studentSelectCourse',
+            name: '选课',
+            component: selectCourse,
+            meta: {requireAuth: true}
+          },
+          {
+            path: '/querySelectedCourse',
+            name: '查询课表',
+            component: querySelectedCourse,
+            meta: {requireAuth: true}
+          }
+        ]
+      },
+      {
+        path: '/courseGrade',
+        name: '学生成绩管理',
+        component: studentCourseGrade,
+        meta: {requireAuth: true},
+        children: [
+          {
+            path: '/queryCourseGrade',
+            name: '成绩查询',
+            component: queryCourseGrade,
+            meta: {requireAuth: true}
+          },
+        ]
+      }
+    ]
+  }
 ]
 
 const router = new VueRouter({
